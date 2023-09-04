@@ -1,3 +1,47 @@
 body {
     background-color: lightslategray;
 }
+
+.calc-container {
+    display: flex;
+    flex-direction: column;
+    background-color: grey;
+    width: 380px;
+    height: 500px;
+}
+
+.calc-screen {
+    background-color: white;
+    width: 350px;
+    height: 60px;
+    margin: 10px;
+}
+
+.calc-buttons {
+    justify-content: center;
+    align-items: center;
+}
+
+.calc-button {
+    background-color: lightblue;
+    height: 50px;
+    width: 50px;
+    margin: 5px;
+}
+
+.bottom-row {
+    display: flex;
+    height: 200px;
+    width: 350px;
+}
+
+.operation-buttons {
+    display: flex;
+}
+
+.number-buttons .calc-button {
+    background-color: rgb(113, 158, 143);
+}
+.big-button {
+    height: 100px;
+}
