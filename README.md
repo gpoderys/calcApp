@@ -1,1 +1,1 @@
-# calcApp
+# Calculator made using JavaScript 
