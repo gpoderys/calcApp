@@ -37,12 +37,19 @@ numberButtons.forEach((button) => {
     });
 });
 
-
-const clear = document.querySelector('#clear');
-clear.addEventListener('click', () => {
+// Clear button
+const clearButton = document.querySelector('#clear');
+clearButton.addEventListener('click', () => {
     var1 = 0, var2 = 0, operator = 0
     displayValue = '0'
 })
+
+// Delete button
+const deleteButton = document.querySelector('#delete');
+deleteButton.addEventListener('click', () => {
+    displayValue = displayValue.slice(0,-1)
+})
+
 
 //   !!! THIS BUTTON SCRIPT NEEDS TO BE LAST !!!
 // Display is updated after every single button click
@@ -51,6 +58,7 @@ const display = document.querySelector('.calc-display');
 const buttons = document.querySelectorAll('.calc-button');
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
+        if (displayValue === '') {displayValue = '0'}
         display.textContent = displayValue
     })
 })
