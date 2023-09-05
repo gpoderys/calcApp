@@ -4,6 +4,7 @@ let result = 0
 let operator = ''
 let displayValue = '0'
 let varReady = false
+let dotAllowed = true
 
 function add(var1, var2){
     return +var1 + +var2
@@ -20,7 +21,7 @@ function subtract(var1, var2){
 }
 
 function operate(var1, var2, operator2){
-    console.log(var1,operator2,var2)
+    console.log('Operation ',var1,operator2,var2)
     switch(operator2){
         case '+':
             return add(var1, var2)
@@ -61,12 +62,14 @@ operatorButtons.forEach((button) => {
             if (result === 'operating') {
                 var2 = displayValue
                 result = operate(var1, var2, operator)
+                console.log('Result = ',result)
                 displayValue = parseFloat(result).toFixed(0)
                 result = '0'
             }
             operator = button.textContent
             var1 = displayValue
             varReady = true
+            dotAllowed = true
             result = 'operating'
         }
     })
@@ -78,13 +81,14 @@ equalsButton.addEventListener('click', () => {
     if (result !== 'done') {
         var2 = displayValue
         result = operate(var1, var2, operator)
-        console.log(result)
+        console.log('Result = ',result)
         if (result === 'error') {
             displayValue = `Can't divide by zero`
         } else {
             displayValue = parseFloat(result.toFixed(10))
         }
         var1 = 0, var2 = 0, operator = ''
+        dotAllowed = true
         result = 'done'
     }
 })
@@ -94,7 +98,7 @@ const clearButton = document.querySelector('#clear');
 clearButton.addEventListener('click', () => {
     var1 = 0, var2 = 0, operator = ''
     result = 0, displayValue = '0'
-    varReady = false
+    varReady = false, dotAllowed = true
 })
 
 // Delete button
@@ -105,9 +109,20 @@ deleteButton.addEventListener('click', () => {
     }
 })
 
+// Dot button
+const dotButton = document.querySelector('#dot');
+dotButton.addEventListener('click', () => {
+    if (dotAllowed === false){
+        displayValue = displayValue.slice(0,-1)
+    }
+    if (displayValue === '.') {
+        displayValue = '0.'
+    }
+    dotAllowed = false
+})
+
 //   !!! THIS BUTTON SCRIPT NEEDS TO BE LAST !!!
 // Display is updated after every single button click
-// no need to repeat display value updates elsewhere
 const display = document.querySelector('.calc-display');
 const buttons = document.querySelectorAll('.calc-button');
 buttons.forEach((button) => {
