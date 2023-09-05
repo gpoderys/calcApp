@@ -1,8 +1,9 @@
 let var1 = 0
 let var2 = 0
 let result = 0
-let operator = 'a'
+let operator = ''
 let displayValue = '0'
+let varReady = false
 
 function add(var1, var2){
     return +var1 + +var2
@@ -29,6 +30,8 @@ function operate(var1, var2, operator2){
             return multiply(var1, var2)
         case '/':
             return divide(var1, var2)
+        case '':
+            return 0
     }
 }
 
@@ -36,16 +39,17 @@ function operate(var1, var2, operator2){
 const numberButtons = document.querySelectorAll('.number-buttons .calc-button');
 numberButtons.forEach((button) => {
     button.addEventListener('click', () => {
-        if (result === 'done') {
-            displayValue = '0'
+        if (result === 'done' || displayValue === '0') {
+            displayValue = ''
             result = 0
         }
-            if (displayValue.length < 15){
-                if (displayValue === '0'){ 
-                    displayValue = ''
-                }
+            if (displayValue.length < 15 && varReady === false){
                 displayValue += button.textContent
-            } 
+            } else if (varReady === true){
+                displayValue = ''
+                displayValue += button.textContent
+                varReady = false
+            }
     });
 });
 
@@ -54,9 +58,16 @@ const operatorButtons = document.querySelectorAll('.operator');
 operatorButtons.forEach((button) => {
     button.addEventListener('click', () => {
         if (displayValue !== `Can't divide by zero`){
+            if (result === 'operating') {
+                var2 = displayValue
+                result = operate(var1, var2, operator)
+                displayValue = parseFloat(result).toFixed(0)
+                result = '0'
+            }
             operator = button.textContent
             var1 = displayValue
-            displayValue = '0'
+            varReady = true
+            result = 'operating'
         }
     })
 })
@@ -71,11 +82,9 @@ equalsButton.addEventListener('click', () => {
         if (result === 'error') {
             displayValue = `Can't divide by zero`
         } else {
-            displayValue = parseFloat(result).toFixed(1)
+            displayValue = parseFloat(result.toFixed(10))
         }
-        var1 = 0
-        var2 = 0
-        operator = ''
+        var1 = 0, var2 = 0, operator = ''
         result = 'done'
     }
 })
@@ -85,6 +94,7 @@ const clearButton = document.querySelector('#clear');
 clearButton.addEventListener('click', () => {
     var1 = 0, var2 = 0, operator = ''
     result = 0, displayValue = '0'
+    varReady = false
 })
 
 // Delete button
