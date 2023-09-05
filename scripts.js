@@ -44,7 +44,7 @@ numberButtons.forEach((button) => {
             displayValue = ''
             result = 0
         }
-            if (displayValue.length < 15 && varReady === false){
+            if (displayValue.length < 11 && varReady === false){
                 displayValue += button.textContent
             } else if (varReady === true){
                 displayValue = ''
